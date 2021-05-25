@@ -25,19 +25,15 @@ def createSoup(url):
 
 
 def findText(soup):
-    body = soup.find("body")
-    divcontent = body.find("div", {"class": "mw-body"})
-    divbodycontent = divcontent.find("div", {"id": "bodyContent"})
-    divbodycontenttext = divbodycontent.find("div", {"id": "mw-content-text"})
-    pfrombodycontenttext = divbodycontenttext.find_all("p")
-    finaltext = controlparagraphs(pfrombodycontenttext)
+    allp = soup.find(id="mw-content-text").find_all("p")
+    finaltext = controlparagraphs(allp)
     return finaltext
 
 
-def controlparagraphs(pfrombodycontenttext):
+def controlparagraphs(allp):
     finaltext = "We could not find a proper definition. Please check your entry."
     for i in range(10):
-        text = pfrombodycontenttext[i].text
+        text = allp[i].text
         if len(text) > 20:
             finaltext = text
             break
